@@ -12,6 +12,7 @@ async def on_ready():
 
 @client.command()
 async def faucet(ctx, *, address=""):
+        address = address.strip()
         if "txch" == address[0:4] and len(address) == 63:
                 s = address.index("txch")
                 e = len(address)
