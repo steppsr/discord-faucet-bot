@@ -1,43 +1,28 @@
 import discord
 from discord.ext import commands
 import requests
-from dotenv import load_dotenv
-from PIL import Image
-import os
 
 discord_token = "YOUR_DISCORD_TOKEN"
 
-load_dotenv()
-client = commands.Bot(command_prefix="*", intents=discord.Intents.all())
-
-directory = os.getcwd()
-print(directory)
-
-async def make_request(url)
-        response = requests.get(url)
-        if response.status_code == 200:
-
-                print(f"Request submitted.")
+client = commands.Bot(command_prefix="/", intents=discord.Intents.all())
 
 @client.event
 async def on_ready():
-        print("Bot connected")
+        print("Bot is ready.")
 
-@client.event
-async def on_message(message):
-        for attachment in message.attachments:
-                if "/faucet" in message.content or "!faucet" in message.content:
-                        if "txch" in message.content:
-                                s = message.content.index("txch")
-                                e = len(message.content)
-                                if message.content.find(" ", s) >= 0:
-                                        e = message.content.index(" ", s)
-                                address = message.content[s:e]
-                                url = "https://xchdev.com/faucet/index.php?address=" + address
-                                await make_request(url)
-                        elif "xch" in message.content:
-                                print("Invalid address. This is a testnet faucet. You provided a mainnet address.")
-                        else:
-                                print("Missing testnet address.")
+@client.command()
+async def faucet(ctx, *, address=""):
+        if "txch" == address[0:4] and len(address) == 63:
+                s = address.index("txch")
+                e = len(address)
+                if address.find(" ", s) >= 0:
+                        e = address.index(" ", s)
+                address = address[s:e]
+                response = requests.get("https://xchdev.com/faucet/index.php?address=" + address)
+                await ctx.send(f"{ctx.message.author.mention} Request submitted. Expect 5 to 10 minutes to receive your TXCH.")
+        elif "xch" == address[0:3]:
+                await ctx.send(f"{ctx.message.author.mention} Invalid testnet address. You may have provided a mainnet address.")
+        else:
+                await ctx.send(f"{ctx.message.author.mention} Invalid testnet address.")
 
 client.run(discord_token)
