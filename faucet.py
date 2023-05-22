@@ -24,7 +24,7 @@ async def faucet(ctx, *, address=""):
         address = address[s:e]
 
         # address should start with "txch" and be 63 characters long otherwise it is an invalid address.
-        if "txch" == address[0:4] and len(address) == 63:
+        if "txch" == address[0:4] and len(address) == 63 and address.isalnum():
                 response = requests.get("https://xchdev.com/faucet/index.php?address=" + address)
                 await ctx.send(f"{ctx.message.author.mention} Request submitted. Expect 5 to 10 minutes to receive your TXCH.")
 
