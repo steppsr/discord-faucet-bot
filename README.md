@@ -7,3 +7,4 @@ This site helped with getting the bot setup in Discord: [How to Create a Discord
 
 This site helped with setting up the code as a service on Ubuntu: [Setup a python script as a service through systemctl/systemd](https://medium.com/codex/setup-a-python-script-as-a-service-through-systemctl-systemd-f0cc55a42267)
 
+Another very helpful site is the Documentation here: [discordpy.readthedocs.io](https://discordpy.readthedocs.io/en/stable/#)
